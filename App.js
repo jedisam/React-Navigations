@@ -25,20 +25,40 @@ const MaterialBottomTabs = createMaterialBottomTabNavigator();
 export default class App extends Component {
   createHomeStack = () => (
     <Stack.Navigator>
-      <Stack.Screen name="Feed" component={Feed} />
-      <Stack.Screen name="Detail" component={Detail} />
+      <Stack.Screen
+       name="Feed"
+       component={Feed}
+       options={{
+         title:"My Feed",
+         headerStyle:{
+           backgroundColor: "#444",
+         },
+         headerTintColor:"white"
+        }} 
+        />
+       <Stack.Screen
+       name="Detail"
+       component={Detail}
+       options={{
+         title:"Details",
+         headerStyle:{
+           backgroundColor: "#444",
+         },
+         headerTintColor:"white"
+        }} 
+        />
       <Stack.Screen name="Top Tabs" children={this.createTopTabs} />
       <Stack.Screen name="Bottom Tabs" children={this.createBottomTabs} />
     </Stack.Navigator>
   );
 
-  createTopTabs = () => {
+  createTopTabs = (props) => {
     return (
       <MaterialTopTabs.Navigator>
         <MaterialTopTabs.Screen
          name="Tab 1"
          component={Tab1}
-         options={{title:'Popular'}}
+         options={{title:props.route.params.name}}
          />
         <MaterialTopTabs.Screen
          name="Tab 2"
@@ -54,13 +74,13 @@ export default class App extends Component {
     );
   };
 
-  createBottomTabs = () => {
+  createBottomTabs = (props) => {
     return (
       <MaterialBottomTabs.Navigator>
         <MaterialBottomTabs.Screen
          name="Tab 1" 
          component={Tab1} 
-         options = {{title:'Home'}}
+         options = {{title:props.route.params.name}}
          />
         <MaterialBottomTabs.Screen
          name="Tab 2" 
@@ -79,7 +99,9 @@ export default class App extends Component {
   render() {
     return (
       <NavigationContainer>
-        <Drawer.Navigator>
+        <Drawer.Navigator
+          options={{title:"Music List"}}
+        >
           <Drawer.Screen name="Home" children={this.createHomeStack} />
           <Drawer.Screen name="Contacts" component={Screen1} />
           <Drawer.Screen name="Favorites" component={Screen2} />
